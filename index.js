@@ -21,41 +21,35 @@ const MONGO_URI = process.env.MONGO_URI; // Access environment variable (assumin
 //   tls: true,
 // })
 
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    // ... other options
-    tls:  false, // Adjust based on security requirements
-      secureProtocol: 'TLSv1_2_method' // Enforce TLS 1.2
-    
-  })
-  .then(() => console.log('MongoDB connected successfully.'))
-  .catch(err => console.error(err));
+mongoose.connect(MONGO_URI)
+    .then(() => console.log('MongoDB connected successfully.'))
+    .catch(err => console.error(err));
 
- 
-  
- 
+
+
+
 
 // get request
 app.get('/get', (req, res) => {
-TodoModel.find()
-.then(result => res.json(result))
-.catch(err=> res.json(err))
+    TodoModel.find()
+        .then(result => res.json(result))
+        .catch(err => res.json(err))
 })
 
 //update request
-app.put('/put/:id', (req,res) => {
-   const  {id} = req.params;
-     TodoModel.findByIdAndUpdate({_id : id}, {done: true})
-     .then(result => res.json(result))
-     .catch(err => res.json(err))
+app.put('/put/:id', (req, res) => {
+    const { id } = req.params;
+    TodoModel.findByIdAndUpdate({ _id: id }, { done: true })
+        .then(result => res.json(result))
+        .catch(err => res.json(err))
 })
 
 //for delete request
-app.delete('/delete/:id', (req,res) => {
-    const {id} = req.params;
-    TodoModel.findByIdAndDelete({_id: id})
-    .then(result => res.json(result))
-    .then(err => res.json(err))
+app.delete('/delete/:id', (req, res) => {
+    const { id } = req.params;
+    TodoModel.findByIdAndDelete({ _id: id })
+        .then(result => res.json(result))
+        .then(err => res.json(err))
 })
 
 
@@ -70,4 +64,4 @@ app.post('/add', (req, res) => {
         .catch(err => res.json(err))
 })
 
-app.listen(3002, () => console.log('app running on port 3002'))
+app.listen(3001, () => console.log('app running on port 3001'))
